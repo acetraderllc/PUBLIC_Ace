@@ -1,4 +1,4 @@
-module dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace/Terry_COMMON
+module dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git/Terry_COMMON
 
 go 1.15
 

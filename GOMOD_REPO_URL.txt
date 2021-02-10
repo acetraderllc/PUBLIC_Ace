@@ -1,2 +1,2 @@
 # This should be the URL of the PARENT Github/AzureDevops/Bitbucket REPO ONLY!!
-dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace
+dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git
