@@ -1396,6 +1396,10 @@ func MASTER_INIT(PROGNAME string, Version float64) {
 	C.Print("Ver: ")	
 	Y.Println(Version)
 
+	G.Println("")
+	G.Println("   ** * **** BANG YOUR HEAD *****")
+	G.Println("")
+
 	//5. Show the OS Information
 	M.Print("|  Current OS: ")
 	W.Println(CURRENT_OS)
