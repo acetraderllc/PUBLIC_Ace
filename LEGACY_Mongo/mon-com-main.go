@@ -17,7 +17,7 @@
 
 */
 
-package Mongo_COMMON
+package LEGACY_Mongo
 
 import (
 	// = = = CORE / Standard Library Deps
