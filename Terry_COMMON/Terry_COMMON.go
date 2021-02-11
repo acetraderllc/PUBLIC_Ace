@@ -1397,7 +1397,7 @@ func MASTER_INIT(PROGNAME string, Version float64) {
 	Y.Println(Version)
 
 	G.Println("")
-	G.Println("   ** * **** Metal Drives u mad --- BANG YOUR HEAD *****")
+	G.Println("   ** ENOUGH WITH TILLY and MICHAEL!!! *****")
 	G.Println("")
 
 	//5. Show the OS Information
