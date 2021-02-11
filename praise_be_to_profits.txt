@@ -1,6 +1,0 @@
-total 8
-drwxr-xr-x@  5 cowboy  staff  160 Feb 10 04:07 [1m[31m.[39;49m[0m
-drwxr-xr-x@ 14 cowboy  staff  448 Feb 10 04:06 [1m[31m..[39;49m[0m
-drwxr-xr-x@ 11 cowboy  staff  352 Feb 10 04:07 [1m[31m.git[39;49m[0m
--rw-r--r--@  1 cowboy  staff  985 Feb 10 04:07 README.md
--rw-r--r--   1 cowboy  staff    0 Feb 10 04:07 praise_be_to_profits.txt
