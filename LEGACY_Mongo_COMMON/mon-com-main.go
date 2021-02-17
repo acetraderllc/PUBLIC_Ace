@@ -120,13 +120,20 @@ func DB_INIT(EXTRA_ARGS ...string) {
 		os.Exit(ERROR_CODE)
 	}
 	
-	defer temp_DBSess.Close()
+//	defer temp_DBSess.Close()
 	temp_DBSess.SetMode(mgo.Monotonic, true)
 	temp_DBSess.SetSocketTimeout(1 * time.Hour)	// Needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
 
 	// Assign to the global DB session object
 	DBSession = temp_DBSess.Copy()
 } //end of func
+
+
+func NEW_DB_SESSION() *mgo.Session {
+	temp_new_sess := DBSession.Copy()
+
+	return temp_new_sess
+}
 
 
 var DROP_FLAG = false 		// if specified as true, we drop any indexes or collections
