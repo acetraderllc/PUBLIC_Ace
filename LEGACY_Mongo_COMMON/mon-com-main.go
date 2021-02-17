@@ -122,7 +122,7 @@ func DB_INIT(EXTRA_ARGS ...string) {
 	
 	defer temp_DBSess.Close()
 	temp_DBSess.SetMode(mgo.Monotonic, true)
-	temp_DBSess.SetSocketTimeout(1 * time.Hour)		// This is needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
+	temp_DBSess.SetSocketTimeout(1 * time.Hour)	// Needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
 
 	// Assign to the global DB session object
 	DBSession = temp_DBSess.Copy()
