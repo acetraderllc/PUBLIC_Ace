@@ -48,6 +48,7 @@ var DBPASS = ""
 var DB_CONNECTION_TIMEOUT = 300		// 300 seconds (5 mins) before we stop trying to connect to mongo
 
 var DBName = "INPUT_NEEDED_MONGO_DB_NAME"							// Name of the mongo database we work with
+var DBNAME = "INPUT_NEEDED_MONGO_DB_NAME"			// alt alias for DBName
 var COLLECTION_NAME = "INPUT_NEEDED_MONGO_COLLECTION_NAME"				// Name of the COLLECTION within the database we need
 
 var MAX_DB_RETRY = 5
@@ -64,6 +65,7 @@ func DB_INIT(EXTRA_ARGS ...string) {
 		//1b. First param is always DB NAME
 		if x == 0 {
 			DBName = VAL
+			DBNAME = VAL
 			continue
 		}
 		
