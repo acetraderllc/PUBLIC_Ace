@@ -94,6 +94,7 @@ func DB_INIT(EXTRA_ARGS ...string) {
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{DBHOST},
 		Timeout:  timeVAL,
+		Database: DBName,
 	}	
 
 	if DBUSER != "" {
@@ -108,12 +109,11 @@ func DB_INIT(EXTRA_ARGS ...string) {
 
 	//temp_DBSess, err := mgo.Dial(DBHOST)
 
-	temp_DBSess, err := mgo.DialWithInfo(mongoDBDialInfo)	
-	defer temp_DBSess.Close()
-	
-	if err != nil {
+	DBSession, DBErr = mgo.DialWithInfo(mongoDBDialInfo)	
+
+	if DBErr != nil {
 		R.Println("    ERROR conencting to Mongo Server for some reason!!!")
-		Y.Println("     -", err)
+		Y.Println("     -", DBErr)
 		W.Println("    ", "- Perhaps Mongo isnt running??")
 		M.Println("    ", "- Or Perhaps, credentials are invalid??")
 		Y.Println("")
@@ -122,11 +122,12 @@ func DB_INIT(EXTRA_ARGS ...string) {
 	}
 	
 
-	temp_DBSess.SetMode(mgo.Monotonic, true)
-	temp_DBSess.SetSocketTimeout(1 * time.Hour)	// Needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
+	DBSession.SetMode(mgo.Monotonic, true)
+	DBSession.SetSocketTimeout(1 * time.Hour)	// Needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
+	defer DBSession.Close()
 
 	// Assign to the global DB session object
-	DBSession = temp_DBSess.Copy()
+	//DBSession = temp_DBSess.Copy()
 } //end of func
 
 
