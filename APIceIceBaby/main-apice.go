@@ -220,6 +220,8 @@ func PULL_JSON(dest_URL string, jsargs ...string) (bool, string, string, []byte)
 
 	if err2 != nil {
 		R.Println("\n ERROR IN PULL_JSON: ", err2)
+		Y.Print(" DEST URL: ")
+		W.Println(dest_URL)
 		return false, "", "", emptyBYTE
 	}
 
