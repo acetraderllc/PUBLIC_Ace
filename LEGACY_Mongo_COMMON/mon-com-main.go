@@ -108,8 +108,9 @@ func DB_INIT(EXTRA_ARGS ...string) {
 
 	//temp_DBSess, err := mgo.Dial(DBHOST)
 
-	temp_DBSess, err := mgo.DialWithInfo(mongoDBDialInfo)
-
+	temp_DBSess, err := mgo.DialWithInfo(mongoDBDialInfo)	
+	defer temp_DBSess.Close()
+	
 	if err != nil {
 		R.Println("    ERROR conencting to Mongo Server for some reason!!!")
 		Y.Println("     -", err)
@@ -120,7 +121,7 @@ func DB_INIT(EXTRA_ARGS ...string) {
 		os.Exit(ERROR_CODE)
 	}
 	
-//	defer temp_DBSess.Close()
+
 	temp_DBSess.SetMode(mgo.Monotonic, true)
 	temp_DBSess.SetSocketTimeout(1 * time.Hour)	// Needed to fix those i/o timeout 127.0.0.1 errors weve been seeing
 
