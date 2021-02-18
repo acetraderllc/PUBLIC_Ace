@@ -1,6 +1,6 @@
 module dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git/Terry_COMMON
 
-go 1.15
+go 1.16
 
 require (
 	github.com/atotto/clipboard v0.1.2
