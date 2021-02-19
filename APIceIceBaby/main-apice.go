@@ -295,8 +295,21 @@ func JSON_DOWNLOAD(API_URL string) (bool, []byte, string) {
 		}
 	} //end of for
 
+	//3. Some arbitraray error handling:
+	response_TEXT := string(JSON_BYTE_OBJ)
+
+	if response_TEXT == "" || len(response_TEXT) <= 3 {
+		WAS_SUCCESS = false
+
+		R.Print(" ** Error in JSON_Download: ")
+		Y.Print(" Not enough Text Returned: ")
+		W.Println(response_TEXT)
+	}
+
+
+
 	//4. Finally return our byte OBJ , a failure flag and string version of JSON response
-	return WAS_SUCCESS, JSON_BYTE_OBJ, string(JSON_BYTE_OBJ)
+	return WAS_SUCCESS, JSON_BYTE_OBJ, response_TEXT
 
 } //end of func
 
