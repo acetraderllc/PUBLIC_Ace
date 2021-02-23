@@ -274,8 +274,9 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 
 	FULL_RESPONSE_TEXT := string(body)
 
+	Y.Println(" GOOD WILL ")
 	//5. Now finally, lets create our DOM object using goquery
-	doc, err4 := goquery.NewDocumentFromReader(res.Body)
+	doc, err4 := goquery.NewDocumentFromReader(body)
 	if err4 != nil {
 		R.Println(" *** ")
 		R.Println(" *** ERROR IN SCRAPE TOOL - During GOQUERY: ")
