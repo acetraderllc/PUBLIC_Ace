@@ -204,8 +204,15 @@ func IS_EVEN(input_NUM int) bool {
 
 
 // MULTI-PURPOSE SCREEN SCRAPE TOOL
+// Params: URL, UserAgent
+// Returns: bool, GOQUERY_DOC, Text of Response
 
 func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
+
+	C.Println("")
+	C.Println(" *** Calling SCRAPE_TOOL ***")
+	C.Println("")
+	
 	URL := ""
 
 	// Defaults to CHrome
