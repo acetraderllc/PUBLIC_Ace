@@ -206,7 +206,7 @@ func IS_EVEN(input_NUM int) bool {
 // MULTI-PURPOSE SCREEN SCRAPE TOOL
 // Params: URL, UserAgent
 // Returns: bool, GOQUERY_DOC, Text of Response
-
+var DEFAULT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
 func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 
 	C.Println("")
@@ -216,16 +216,17 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	URL := ""
 
 	// Defaults to CHrome
-	USER_AGENT := "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"		
+	USER_AGENT := DEFAULT_USER_AGENT
 	
 	//1. Get tvars passed
 	for x, VAL := range EXTRA_ARGS {
 
-		//1b. First param is always DB NAME
+		//1b. First Param is URL
 		if x == 0 {
 			URL = VAL
 			continue
 		}
+		//1c. Next param is user agent
 		if x == 1 {
 			USER_AGENT = VAL
 			continue
@@ -239,7 +240,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		R.Println(" *** ")
-		R.Println(" *** ERROR IN SCRAPE TOOL - During http OBJECT Create: ")
+		R.Println(" *** ERROR IN SCRAPE_TOOL - During http OBJECT Create: ")
 		Y.Println(err)
 		R.Println(" *** ")
 		R.Println("")
@@ -254,54 +255,27 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	defer res.Body.Close()	
 	if err2 != nil {
 		R.Println(" *** ")
-		R.Println(" *** ERROR IN SCRAPE TOOL - During CLIENT HTTP Pull: ")
+		R.Println(" *** ERROR IN SCRAPE_TOOL - During CLIENT HTTP Pull: ")
 		Y.Println(err2)
 		R.Println(" *** ")
 		R.Println("")
 		return false, GOQUERY_doc, ""
 	}
-	
 
-	//4. If we got this far, all is well.. Lets query the body of the response and put it into TEXT mode
-	body_OBJ, err3 := ioutil.ReadAll(res.Body)
+	//5. Now finally, lets create our DOM object using goquery and empty the reader into the DOM object
+	doc, err3 := goquery.NewDocumentFromReader(res.Body)
 	if err3 != nil {
 		R.Println(" *** ")
-		R.Println(" *** ERROR IN SCRAPE TOOL - IoUtil Body Parse: ")
+		R.Println(" *** ERROR IN SCRAPE_TOOL - During GOQUERY: ")
 		Y.Println(err3)
-		R.Println(" *** ")
-		R.Println("")
-		return false, GOQUERY_doc, ""
-	}		
-
-	FULL_RESPONSE_TEXT := string(body_OBJ)
-
-	Y.Println(" GOOD WILL ")
-	//5. Now finally, lets create our DOM object using goquery
-	doc, err4 := goquery.NewDocumentFromReader(res.Body)
-	if err4 != nil {
-		R.Println(" *** ")
-		R.Println(" *** ERROR IN SCRAPE TOOL - During GOQUERY: ")
-		Y.Println(err4)
 		R.Println(" *** ")
 		R.Println("")
 		return false, GOQUERY_doc, ""
 	}	
 
-	//6. All Done!! Return the Goquery DOC Object
+	//6. Also for DEBUG purposes: Lets show the body of the ENTIRE document
+	FULL_RESPONSE_TEXT := doc.Find("html").Text()
 
- 	doc.Find("content-block-main").Each(func(i int, O *goquery.Selection) {
-		W.Print(i, " ")
-		C.Println(" TEXT: **" + O.Text() + "** ")
-  	})
-
-	PressAny()	
-
-	//2. Value of stuff in boxes
- 	doc.Find(".snapshot-td2").Each(func(i int, O *goquery.Selection) {
-		Y.Print(i, " ")
-		C.Println(" VAL: **" + O.Text() + "** ")
-  	})
-	PressAny()	
 
 	return true, doc, FULL_RESPONSE_TEXT
 
