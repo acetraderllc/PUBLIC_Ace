@@ -251,6 +251,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 
 	//3b. Now.. actually do the Http Client Request (with the header)
 	res, err2 := client.Do(req)
+	defer res.Body.Close()	
 	if err2 != nil {
 		R.Println(" *** ")
 		R.Println(" *** ERROR IN SCRAPE TOOL - During CLIENT HTTP Pull: ")
@@ -259,7 +260,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 		R.Println("")
 		return false, GOQUERY_doc, ""
 	}
-	defer res.Body.Close()	
+	
 
 	//4. If we got this far, all is well.. Lets query the body of the response and put it into TEXT mode
 	body, err3 := ioutil.ReadAll(res.Body)
