@@ -212,7 +212,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	C.Println("")
 	C.Println(" *** Calling SCRAPE_TOOL ***")
 	C.Println("")
-	
+
 	URL := ""
 
 	// Defaults to CHrome
@@ -286,6 +286,20 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	}	
 
 	//6. All Done!! Return the Goquery DOC Object
+
+ 	doc.Find("td[class^=snapshot-td2-cp]").Each(func(i int, O *goquery.Selection) {
+		W.Print(i, " ")
+		C.Println(" TEXT: **" + O.Text() + "** ")
+  	})
+
+	PressAny()	
+
+	//2. Value of stuff in boxes
+ 	doc.Find(".snapshot-td2").Each(func(i int, O *goquery.Selection) {
+		Y.Print(i, " ")
+		C.Println(" VAL: **" + O.Text() + "** ")
+  	})
+	PressAny()	
 
 	return true, doc, FULL_RESPONSE_TEXT
 
