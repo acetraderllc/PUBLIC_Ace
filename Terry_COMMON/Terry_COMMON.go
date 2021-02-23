@@ -3,6 +3,7 @@
 NOTE: For Functions or Variables to be globally availble. The MUST start with a capital letter.
 	  (This is a GO Thing)
 
+	Feb 22, 2021	v1.90	- Added SCRAPE_TOOL for screen scraping
 	Feb 15, 2020	v1.81	- Major Revamp to the GET_CURRENT_TIME and also have --zone TIME_ZONE_FLAG variable available to force Timezone
 
 	Feb 14, 2020	v1.79	- Removed a lot of redundant functions (for date in particular)
@@ -24,34 +25,33 @@ package Terry_COMMON
 
 import (
 
-	// = = = CORE / Standard Library Deps
-	"bufio"
-	"crypto/md5"
-	"encoding/hex"
-	"flag"
-	"io"
-	"io/ioutil"
-	"math"
-	"math/rand"
-	"net/http" 			// Needed for the functions that send JSON back and forth
-	"os"
-	"os/exec"
-	"regexp"
-	"runtime"
-	"sort"
-	"strconv"
-	"strings"
-	"time"
-	"unicode"
+	//1.  = = = CORE / Standard Library Deps
+		"bufio"
+		"crypto/md5"
+		"encoding/hex"
+		"flag"
+		"io"
+		"io/ioutil"
+		"math"
+		"math/rand"
+		"net/http" 			// Needed for the functions that send JSON back and forth
+		"os"
+		"os/exec"
+		"regexp"
+		"runtime"
+		"sort"
+		"strconv"
+		"strings"
+		"time"
+		"unicode"
 
-	// = = = Personal/Custom Deps
-
-
-	// = = = 3rd Party DEPS
-	"github.com/atotto/clipboard"
-	"github.com/briandowns/spinner"
-	"github.com/dustin/go-humanize"
-	"github.com/fatih/color"
+	
+	//2. = = = 3rd Party DEPENDENCIES
+		"github.com/atotto/clipboard"
+		"github.com/briandowns/spinner"
+		"github.com/dustin/go-humanize"
+		"github.com/fatih/color"
+		"github.com/PuerkitoBio/goquery"
 )
 
 /*
@@ -200,6 +200,89 @@ func IS_EVEN(input_NUM int) bool {
 
 	return false
 }
+
+
+
+// MULTI-PURPOSE SCREEN SCRAPE TOOL
+
+func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
+	URL := ""
+
+	// Defaults to CHrome
+	USER_AGENT := "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"		
+	
+	//1. Get tvars passed
+	for x, VAL := range EXTRA_ARGS {
+
+		//1b. First param is always DB NAME
+		if x == 0 {
+			URL = VAL
+			continue
+		}
+		if x == 1 {
+			USER_AGENT = VAL
+			continue
+		}
+	}
+
+	var GOQUERY_doc *goquery.Document
+
+	//2. Now generate a NewRequest Object with http
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		R.Println(" *** ")
+		R.Println(" *** ERROR IN SCRAPE TOOL - During http OBJECT Create: ")
+		Y.Println(err)
+		R.Println(" *** ")
+		R.Println("")
+		return false, GOQUERY_doc, ""
+	}
+
+	//3. Next, Set the User Agent the client will use during the HTTP Pull
+	req.Header.Set("User-Agent", USER_AGENT)
+
+	//3b. Now.. actually do the Http Client Request (with the header)
+	res, err2 := client.Do(req)
+	if err2 != nil {
+		R.Println(" *** ")
+		R.Println(" *** ERROR IN SCRAPE TOOL - During CLIENT HTTP Pull: ")
+		Y.Println(err2)
+		R.Println(" *** ")
+		R.Println("")
+		return false, GOQUERY_doc, ""
+	}
+	defer res.Body.Close()	
+
+	//4. If we got this far, all is well.. Lets query the body of the response and put it into TEXT mode
+	body, err3 := ioutil.ReadAll(res.Body)
+	if err3 != nil {
+		R.Println(" *** ")
+		R.Println(" *** ERROR IN SCRAPE TOOL - IoUtil Body Parse: ")
+		Y.Println(err3)
+		R.Println(" *** ")
+		R.Println("")
+		return false, GOQUERY_doc, ""
+	}		
+
+	FULL_RESPONSE_TEXT := string(body)
+
+	//5. Now finally, lets create our DOM object using goquery
+	doc, err4 := goquery.NewDocumentFromReader(res.Body)
+	if err4 != nil {
+		R.Println(" *** ")
+		R.Println(" *** ERROR IN SCRAPE TOOL - During GOQUERY: ")
+		Y.Println(err4)
+		R.Println(" *** ")
+		R.Println("")
+		return false, GOQUERY_doc, ""
+	}	
+
+	//6. All Done!! Return the Goquery DOC Object
+
+	return true, doc, FULL_RESPONSE_TEXT
+
+} //end of func
 
 
 

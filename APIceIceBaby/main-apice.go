@@ -1,5 +1,6 @@
 /*	APIcebaby - Full Service Rest and JSON wrapper functions for Centene Golang Dev 
 
+	v1.54	Feb 22, 2021	- Removed SCrape Master.. moved a better version to TERRY_COMMON
 	v1.52	Feb 03, 2020	- Added JSON_DOWNLOAD. Downloads a json Byte object you can read or iterate
 	v1.50	Jan 06, 2020	- Rebranded just making this the generic name for this Module
 	v1.45	Dec 27, 2019	- Added parameter parse support. sends them in an array you can access
@@ -26,7 +27,6 @@ import (
 		"io/ioutil"
 
 	// 2. 3RD Party Libs
-		"github.com/PuerkitoBio/goquery"
 		"github.com/buger/jsonparser"
 
 	// 3. Proprietary (Personal) Libs/Modules
@@ -59,45 +59,6 @@ func MinifyJSON(str string) string {
 		 return r
 	}, str)
 } //end of 
-
-
-var SCRAPE_RETRY_MAX = 3
-
-var LOGFILE_FLAG = false
-var DEFAULT_LOGFILE = "SUPER_SCRAPE.log"
-
-// This DOM Scraper routine uses the GO version of Jquery (GoQUERY) and does some error handling. Retries if it errors out and sleeps between attempts
-func SUPER_SCRAPE(dest_url string) (bool, *goquery.Document) {
-
-	success_flag := false
-	var FDOC *goquery.Document
-
-	//3. ERROR HANDLING for the HTTP pull retry the pull upto three times
-	for x := 0; x < SCRAPE_RETRY_MAX; x++ {
-
-		//3b Try to pull from ulr
-		doc, err := goquery.NewDocument(dest_url)
-
-		//3c. If we have an error, we log it.. and then sleep for a bit
-		if err != nil {
-
-			errmess := "SUPER_SCRAPE Problem with: " + dest_url
-
-			errmess += " | Retry # " + ShowNum(x)
-
-			ErrorLog(DEFAULT_LOGFILE, errmess, err)
-			Sleep(5, true)
-
-			//3d. Otherwise we set INVALID_REQUEST to false and break the loop
-		} else {
-			success_flag = true
-			FDOC = doc
-			break
-		} // end of for
-	}
-
-	return success_flag, FDOC
-} //end of func
 
 
 /* This is meant to be passed a keymap of url.Values
