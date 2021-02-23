@@ -263,7 +263,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 	
 
 	//4. If we got this far, all is well.. Lets query the body of the response and put it into TEXT mode
-	body, err3 := ioutil.ReadAll(res.Body)
+	body_OBJ, err3 := ioutil.ReadAll(res.Body)
 	if err3 != nil {
 		R.Println(" *** ")
 		R.Println(" *** ERROR IN SCRAPE TOOL - IoUtil Body Parse: ")
@@ -273,7 +273,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 		return false, GOQUERY_doc, ""
 	}		
 
-	FULL_RESPONSE_TEXT := string(res.Body)
+	FULL_RESPONSE_TEXT := string(body_OBJ)
 
 	Y.Println(" GOOD WILL ")
 	//5. Now finally, lets create our DOM object using goquery
