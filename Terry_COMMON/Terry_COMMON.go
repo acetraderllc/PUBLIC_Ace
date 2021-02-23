@@ -273,7 +273,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 		return false, GOQUERY_doc, ""
 	}		
 
-	FULL_RESPONSE_TEXT := string(body)
+	FULL_RESPONSE_TEXT := string(res.Body)
 
 	Y.Println(" GOOD WILL ")
 	//5. Now finally, lets create our DOM object using goquery
@@ -289,7 +289,7 @@ func SCRAPE_TOOL(EXTRA_ARGS ...string) (bool, *goquery.Document, string) {
 
 	//6. All Done!! Return the Goquery DOC Object
 
- 	doc.Find("td[class^=snapshot-td2-cp]").Each(func(i int, O *goquery.Selection) {
+ 	doc.Find("content-block-main").Each(func(i int, O *goquery.Selection) {
 		W.Print(i, " ")
 		C.Println(" TEXT: **" + O.Text() + "** ")
   	})
