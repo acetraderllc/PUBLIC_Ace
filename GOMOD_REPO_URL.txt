@@ -1,2 +1,6 @@
 # This should be the URL of the PARENT Github/AzureDevops/Bitbucket REPO ONLY!!
+# NOTE: For when you have SEVERAL GO MODULES as DIRECTORIES in a SINGLE REPO.. you use the format:
 dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git
+
+# If your entire module is in the Root of the repo, just use the REPO Name:
+# dev.azure.com/acetraderllc/shared/_git/APIceCream
