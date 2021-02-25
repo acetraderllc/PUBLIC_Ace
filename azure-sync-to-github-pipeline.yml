@@ -1,4 +1,12 @@
 # Starter pipeline
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+  
+steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
@@ -9,13 +17,13 @@
       Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
       $stageDir = '$(Build.SourcesDirectory)' | Split-Path
       $githubDir = $stageDir +"\"+"gitHub"
-      $destination = $githubDir +"\"+"<azure-repo-name>.git"
+      $destination = $githubDir +"\"+"$(AZURE_REPO).git"
       #please provide your username
-      $alias = '<userName>:'+ "$(Github.PAT)"
+      $alias = "$(GITHUB_USERNAME)" + ':'+ "$(Github.PAT)"
       #Please make sure, you remove https from azure-repo-clone-url
-      $sourceURL = 'https://$(AzureDevOps.PAT)@<azure-repo-clone-url>'
+      $sourceURL = 'https://$(AzureDevOps.PAT)@' + "$(AZURE_REPO_CLONE_URL_sans_https)"
       #Please make sure, you remove https from github-repo-clone-url
-      $destURL = 'https://' + $alias + '@<github-repo-clone-url>'
+      $destURL = 'https://' + $alias + '@' + "$(GITHUB_REPO_CLONE_URL)"
       #Check if the parent directory exists and delete
       if((Test-Path -path $githubDir))
       {
@@ -50,17 +58,3 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
