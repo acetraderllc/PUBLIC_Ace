@@ -1,4 +1,4 @@
-/*	APIcebaby - Full Service Rest and JSON wrapper functions for Centene Golang Dev 
+/*	APIceCream - A bunch of SUPER lean REST and JSON helper functions to make REST dev in GO ..FUN!
 
 	v1.54	Feb 22, 2021	- Removed SCrape Master.. moved a better version to TERRY_COMMON
 	v1.52	Feb 03, 2020	- Added JSON_DOWNLOAD. Downloads a json Byte object you can read or iterate
@@ -13,15 +13,15 @@
 
 */
 
-package APIceIceBaby
+package APIceCream
 
-import (	
+import (
 
 	// 1. Native LIBS
-		"net/http"		 
+		"net/http"
 		"unicode"
-		"net/url"  			
-		"os"	
+		"net/url"
+		"os"
 		"flag"
 		"strings"
 		"io/ioutil"
@@ -30,7 +30,7 @@ import (
 		"github.com/buger/jsonparser"
 
 	// 3. Proprietary (Personal) Libs/Modules
-		. "dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git/Terry_COMMON"
+		. "dev.azure.com/acetraderllc/shared/_git/PUBLIC_Ace.git/GOGO_Gadgets"
 )
 
 

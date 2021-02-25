@@ -1,8 +1,10 @@
-/*   Terry_COMMON - Common code snippets i use for Go Development used module code
+/*   GOGO_Gadgets  - Useful multi-purpose GO functions to make GO DEV easier
+
 ---------------------------------------------------------------------------------------
 NOTE: For Functions or Variables to be globally availble. The MUST start with a capital letter.
 	  (This is a GO Thing)
 
+	Feb 24, 2021    v2.0    - High time this become a real tool library. Refactored this from being Terry_COMMON
 	Feb 22, 2021	v1.90	- Added SCRAPE_TOOL for screen scraping
 	Feb 15, 2020	v1.81	- Major Revamp to the GET_CURRENT_TIME and also have --zone TIME_ZONE_FLAG variable available to force Timezone
 
@@ -12,7 +14,6 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 							- Working on the SHOW_PRETTY_DATE
 							
 	Feb 13, 2020	v1.76	- Removed UNEEDED stuff
-	Feb 03, 2020	v1.75	- Added badass GET_CALLER_FUNC_NAME (for finding the parent function call)
 	Jan 26, 2020	v1.73	- Got rid of more redundant functions that got pushed to APIcebaby
 	Jan 23, 2020	v1.67	- Removed redundant fucntions (stuff that is now in APIce)
 	Jan 05, 2020	v1.66	- Some cosmetic changes, Updated TerryCOMMON again
@@ -21,7 +22,7 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 
 */
 
-package Terry_COMMON
+package GOGO_Gadgets
 
 import (
 
