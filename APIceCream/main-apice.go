@@ -673,6 +673,15 @@ func MINI_WEB(WEBROOT string, listenPort string, START_MESSAGE string) {
 
 } //end of
 
+// Alias for MINI_WEB
+func MINI_WEBROOT(WEBROOT string, listenPort string, START_MESSAGE string) {
+	return MINI_WEB(WEBROOT, listenPort, START_MESSAGE) {
+}
+// Alias for MINI_WEB
+func MINI_WEB_ROOT(WEBROOT string, listenPort string, START_MESSAGE string) {
+	return MINI_WEB(WEBROOT, listenPort, START_MESSAGE) {
+}
+
 
 
 
